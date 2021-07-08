@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devos-toolkit
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  spec:
+    project: default
+    source:
+      path: helm
+      repoURL: https://github.com/vfarcic/argocd-15-min.git
+      targetRevision: HEAD
+    destination:
+      namespace: production
+      server: https://kubernetes.default.svc
+    syncPolicy:
+      automated:
+        selfHeal: true
+        prune: true
